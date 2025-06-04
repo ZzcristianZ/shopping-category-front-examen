@@ -25,7 +25,7 @@ function users() {
       if (result.status===200) {
           console.log(result)
             let list_user = `
-            <button class="btn btn-primary" onclick="mostrarFormularioCrearProducto()">Crear Producto</button>
+            <button class="btn btn-success" onclick="mostrarFormularioCrearProducto()">Crear Producto</button>
             <table class="table table-hover table-striped">
             <thead>
             <tr>
@@ -193,34 +193,8 @@ function createProduct() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function personas() {
-    document.getElementById('cardHeader').innerHTML ='<h5>Listado de USUARIOS</h5>';
+    document.getElementById('cardHeader').innerHTML ='<h5>Listado de Usuarios</h5>';
     const REQRES_ENDPOINT = 'https://api.escuelajs.co/api/v1/users/';
     fetch(REQRES_ENDPOINT,  {
         method: 'GET',
@@ -241,7 +215,7 @@ function personas() {
     .then((result)=>{
       if (result.status===200) {
             let list_personas = `
-            <button class="btn btn-primary mb-2" onclick="mostrarFormularioCrearUsuario()">Crear Usuario</button>
+            <button class="btn btn-success mb-2" onclick="mostrarFormularioCrearUsuario()">Crear Usuario</button>
             <table class="table table-hover table-striped">
             <thead>
             <tr>
@@ -349,42 +323,6 @@ function createUsuario() {
         console.error(error);
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

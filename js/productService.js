@@ -21,7 +21,7 @@ function products() {
     .then((result)=>{
         if (result.status===200) {
             let list_products = `
-            <button class="btn btn-primary" onclick="mostrarFormularioCrearCategoria()">Crear Categoria</button>
+            <button class="btn btn-success mb-2" onclick="mostrarFormularioCrearCategoria()">Crear Categoria</button>
             <table class="table table-hover table-striped">
                 <thead>
                   <tr>
