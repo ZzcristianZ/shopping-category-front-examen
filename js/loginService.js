@@ -23,10 +23,12 @@ function login(email, password) {
             alertType ='success'
             message ='inicio exitoso'
             alertBuilder(alertType,message)
-            localStorage.setItem('token',"user1")
+            response.json().then((data)=>{
+                localStorage.setItem('access_token',data.access_token)
+            })
             setTimeout (()=>{
                 location.href='admin/dashboard.html'
-            },2000)
+            },1000)
         } else {
             alertType='danger'
             message='correo o contraseña invalida'

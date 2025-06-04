@@ -220,7 +220,7 @@ function createProduct() {
 
 
 function personas() {
-    document.getElementById('cardHeader').innerHTML ='<h5>Listado de Personas</h5>';
+    document.getElementById('cardHeader').innerHTML ='<h5>Listado de USUARIOS</h5>';
     const REQRES_ENDPOINT = 'https://api.escuelajs.co/api/v1/users/';
     fetch(REQRES_ENDPOINT,  {
         method: 'GET',
@@ -241,13 +241,14 @@ function personas() {
     .then((result)=>{
       if (result.status===200) {
             let list_personas = `
+            <button class="btn btn-primary mb-2" onclick="mostrarFormularioCrearUsuario()">Crear Usuario</button>
             <table class="table table-hover table-striped">
             <thead>
             <tr>
             <th scope="col">ID</th>
+            <th scope="col">NAME</th>
             <th scope="col">EMAIL</th>
             <th scope="col">PASSWORD</th>
-            <th scope="col">NAME</th>
             <th scope="col">ROLE</th>
             <th scope="col">AVATAR</th>
             </tr>
@@ -258,9 +259,9 @@ function personas() {
                 list_personas += `
                 <tr>
                     <td>${element.id}</td>
+                    <td>${element.name}</td>
                     <td>${element.email}</td>
                     <td>${element.password || ''}</td>
-                    <td>${element.name}</td>
                     <td>${element.role}</td>
                     <td><img src="${element.avatar}" alt="avatar" width="40"></td>
                 </tr>
@@ -280,7 +281,74 @@ function personas() {
     
 
 
+function mostrarFormularioCrearUsuario() {
+    document.getElementById('info').innerHTML = `
+        <div class="card">
+            <div class="card-header" id="cardHeader">
+                <h5>Crear Usuario</h5>
+            </div>
+            <div class="card-body">
+                <form id="formCrearUsuario">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombreUsuario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="emailUsuario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="passwordUsuario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Avatar (URL de imagen)</label>
+                        <input type="text" class="form-control" id="avatarUsuario" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Crear</button>
+                </form>
+            </div>
+        </div>
+    `;
 
+    document.getElementById('formCrearUsuario').onsubmit = function(e) {
+        e.preventDefault();
+        createUsuario();
+    };
+}
+
+function createUsuario() {
+    const REQRES_ENDPOINT = 'https://api.escuelajs.co/api/v1/users/';
+    const data = {
+        name: document.getElementById('nombreUsuario').value,
+        email: document.getElementById('emailUsuario').value,
+        password: document.getElementById('passwordUsuario').value,
+        avatar: document.getElementById('avatarUsuario').value
+    };
+
+    fetch(REQRES_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(async response => {
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'No se pudo crear el usuario');
+        }
+        return response.json();
+    })
+    .then(usuario => {
+        alert('Usuario creado correctamente');
+        personas();  
+    })
+    .catch(error => {
+        alert('Error al crear el usuario: ' + error.message);
+        console.error(error);
+    });
+}
 
 
 
@@ -332,7 +400,7 @@ function deleteProduct(id) {
         .then(response => {
             if (response.ok) {
                 alert('Producto eliminado correctamente');
-                users(); // Refresca la lista
+                users(); 
             } else {
                 alert('No se pudo eliminar el producto');
             }
